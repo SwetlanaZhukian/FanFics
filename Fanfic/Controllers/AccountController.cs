@@ -17,11 +17,13 @@ namespace Fanfic.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IOptions<EmailConfig> options;
-        public AccountController(UserManager<User> user, SignInManager<User> signIn, IOptions<EmailConfig> _options)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public AccountController(UserManager<User> user, SignInManager<User> signIn, IOptions<EmailConfig> _options, RoleManager<IdentityRole> role)
         {
             userManager = user;
             signInManager = signIn;
             options = _options;
+            roleManager = role;
         }
         public IActionResult Register()
         {
@@ -41,9 +43,10 @@ namespace Fanfic.Controllers
                 };
 
                 var result = await userManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
                 {
+                   
+                    await userManager.AddToRoleAsync(user,"User");
                     var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action(
                         "ConfirmEmail",

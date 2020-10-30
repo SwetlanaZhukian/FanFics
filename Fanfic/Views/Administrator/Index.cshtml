@@ -1,0 +1,133 @@
+﻿@model Fanfic.Models.ViewModels.UsersWithPaginationViewModel
+    <!DOCTYPE html>
+    <html>
+        <head>
+
+            <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+            <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+        </head>
+        <body>
+            <div>
+                <table class="table">
+                    <thead >
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email </th>
+                            <th scope="col">EmailConfirmed</th>
+                            <th scope="col">IsBlocked</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Users)
+                        {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.EmailConfirmed</td>
+                            <td>@item.IsBlocked</td>
+                            <td>
+                                @foreach (var role in item.Roles)
+                                {
+                                    <ul>
+                                        <li>@role</li>
+                                    </ul>
+
+                                }
+                            </td>
+                            <td>
+                                <form method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                            <td>
+                                @if (item.IsBlocked == false)
+                                {
+                                    <form method="post" asp-action="Blocked" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-sm btn-dark">Blocked</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="UnBlocked" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-sm btn-info">UnBlocked</button>
+                                    </form>
+
+                                }
+                            </td>
+                            <td>
+                                @if (item.Roles.Contains("Admin"))
+                                {
+                                    <form method="post" asp-action="DeleteAdminRole" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-sm btn-warning">NotAdmin</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="AddAdminRole" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-sm btn-success">Admin</button>
+                                    </form>
+
+                                }
+                            </td>
+
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination flex-wrap">
+                    <li class="page-item @(Model.PageViewModel.HasPreviosPage ? " " : " disabled" )">
+                        <a asp-route-Page="1"
+                           class="page-link" aria-label="Frist">
+                            <span aria-hidden="true">|<</span>
+                            <span class="sr-only">First</span>
+                        </a>
+                    </li>
+                    <li class="page-item @(Model.PageViewModel.HasPreviosPage ? " " : " disabled" )">
+                        <a asp-route-Page="@(Model.PageViewModel.PageNumber -1)"
+                           class="page-link" aria-label="Next">
+                            <span aria-hidden="true"><</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                    @for (var i = 1; i <= Model.PageViewModel.TotalPages; i++)
+                    {
+                    <li class="page-item @(i == Model.PageViewModel.PageNumber? " active" : "" )">
+                        <a asp-route-Page="@i" class="page-link">@i</a>
+                    </li>
+                    }
+                    <li class="page-item @(Model.PageViewModel.HasNextPage ? " " : " disabled" )">
+                        <a asp-route-Page="@(Model.PageViewModel.PageNumber + 1)"
+                           class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item @(Model.PageViewModel.HasNextPage ? " " : " disabled" )">
+                        <a asp-route-Page="@Model.PageViewModel.TotalPages"
+                           class="page-link" aria-label="Last">
+                            <span aria-hidden="true">>|</span>
+                            <span class="sr-only">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            @*<ul class="pagination">
+                @for (int i = 1; i <= Model.PageViewModel.TotalPages; i++)
+                {
+                    <li class="@(i == Model.PageViewModel.PageNumber ? "page-item active" : "page-item")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+
+                }
+            </ul>*@
+        </body>
+</html>
+

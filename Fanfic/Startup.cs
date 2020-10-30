@@ -43,6 +43,13 @@ namespace Fanfic
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.LoginPath = "/Account/Login";
+                
+            });
+            
+
             services.AddControllersWithViews();
             services.Configure<EmailConfig>(Configuration.GetSection("SettingEmailAccount"));
             services.AddTransient<EmailSenderService>();
@@ -65,8 +72,8 @@ namespace Fanfic
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();
+            ApplicationContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -158,3 +158,5 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\zh-Hant\Microso
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csproj.CoreCompileInputs.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcApplicationPartsAssemblyInfo.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Account\SuccessRegistration.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Administrator\Index.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Shared\NotFound.cshtml.g.cs
