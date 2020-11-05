@@ -15,6 +15,7 @@ namespace Fanfic.Models.Context
         public DbSet<Composition> Compositions { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<TagComposition> TagCompositions { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
           : base(options)

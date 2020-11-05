@@ -53,6 +53,8 @@ namespace Fanfic
             services.AddControllersWithViews();
             services.Configure<EmailConfig>(Configuration.GetSection("SettingEmailAccount"));
             services.AddTransient<EmailSenderService>();
+            services.AddTransient<AdministratorService>();
+            services.AddTransient<CompositionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

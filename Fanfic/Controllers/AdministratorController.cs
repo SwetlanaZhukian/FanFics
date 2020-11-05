@@ -8,64 +8,39 @@ using Fanfic.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Fanfic.Models;
 using Fanfic.Models.Context;
+using Fanfic.Services;
 using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Bcpg;
 
 namespace Fanfic.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly SignInManager<User> signInManager;
-        private readonly ApplicationContext context;
-        public AdministratorController(UserManager<User> _userManager, RoleManager<IdentityRole> _roleManager, ApplicationContext _context, SignInManager<User> _signInManager)
-        {
-            userManager = _userManager;
-            roleManager = _roleManager;
-            context = _context;
-            signInManager = _signInManager;
+     
+        private readonly AdministratorService administratorService;
+        public AdministratorController(AdministratorService service)
+        {       
+            administratorService = service;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 7;
-            List<UsersViewModel> usersViewModels = new List<UsersViewModel>();
-            var users = context.Users.ToList();
 
-            foreach (var user in users)
-            {
-                UsersViewModel model = new UsersViewModel
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email,
-                    EmailConfirmed = user.EmailConfirmed,
-                    IsBlocked = user.Block,
-                    Roles = await userManager.GetRolesAsync(user)
-                };
-                usersViewModels.Add(model);
-            }
-            PageViewModel pageViewModel = new PageViewModel(users.Count, page, pageSize);
-            UsersWithPaginationViewModel usersWithPaginationViewModel = new UsersWithPaginationViewModel
-            {
-                PageViewModel = pageViewModel,
-                Users = usersViewModels.Skip((page - 1) * pageSize).Take(pageSize)
-            };
-
+            UsersWithPaginationViewModel usersWithPaginationViewModel = await administratorService.GetUsersWithPaginationView(page);
             return View(usersWithPaginationViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var user = await FindUser(id);
+            var user = await administratorService.FindUserAsync(id);
             if (user == null)
             {
                 return RedirectToAction("Error");
             }
             else
             {
-                var result = await userManager.DeleteAsync(user);
+                var result = await administratorService.DeleteAsync(user);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -81,39 +56,36 @@ namespace Fanfic.Controllers
         [HttpPost]
         public async Task<IActionResult> Blocked(string id)
         {
-            var user = await FindUser(id);
+            var user = await administratorService.FindUserAsync(id);
             if (user == null)
             {
                 return RedirectToAction("Error");
             }
             else
             {
-                user.Block = true;
+                administratorService.Block(user);
+                
             }
-            context.Users.Update(user);
-            await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> UnBlocked(string id)
         {
-            var user = await FindUser(id);
+            var user = await administratorService.FindUserAsync(id); ;
             if (user == null)
             {
                 return RedirectToAction("Error");
             }
             else
             {
-                user.Block = false;
+                administratorService.UnBlock(user);
             }
-            context.Users.Update(user);
-            await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> DeleteAdminRole(string id)
         {
-            var user = await FindUser(id);
+            var user = await administratorService.FindUserAsync(id);
             if (user == null)
             {
                
@@ -121,7 +93,7 @@ namespace Fanfic.Controllers
             }
             else
             {
-                await userManager.RemoveFromRoleAsync(user, "Admin");
+                await administratorService.DeleteRoleAsync(user);
                 return RedirectToAction("Index");
             }
 
@@ -129,14 +101,14 @@ namespace Fanfic.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAdminRole(string id)
         {
-            var user = await FindUser(id);
+            var user = await administratorService.FindUserAsync(id);
             if (user == null)
             {
                 return RedirectToAction("Error");
             }
             else
             {
-                await userManager.AddToRoleAsync(user, "Admin");
+                await administratorService.AddRoleAsync(user);
                 return RedirectToAction("Index");
             }
 
@@ -148,11 +120,7 @@ namespace Fanfic.Controllers
             return View("NotFound");
         }
 
-        public async Task<User> FindUser(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            return user;
-        }
+       
 
 
     }

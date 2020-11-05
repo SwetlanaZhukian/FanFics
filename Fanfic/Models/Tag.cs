@@ -9,11 +9,11 @@ namespace Fanfic.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<TagComposition> Compositions { get; set; }
+        public IEnumerable<TagComposition> Compositions { get; set; }
 
         public Tag()
         {
-            Compositions = new List<TagComposition>();
+            Compositions = new HashSet<TagComposition>();
         }
     }
 }

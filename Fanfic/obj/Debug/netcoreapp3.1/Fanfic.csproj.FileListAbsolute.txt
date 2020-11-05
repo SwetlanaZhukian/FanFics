@@ -79,7 +79,6 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.pdb
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.genruntimeconfig.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csprojAssemblyReference.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\MailKit.dll
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\MimeKit.dll
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
@@ -160,3 +159,9 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcAppli
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Account\SuccessRegistration.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Administrator\Index.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Shared\NotFound.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\User\Index.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\Create.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\libman.json
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\SuccessfulCreate.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\CreateChapter.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csprojAssemblyReference.cache

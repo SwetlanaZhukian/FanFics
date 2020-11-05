@@ -23,18 +23,19 @@ namespace Fanfic.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public Genre GenreOfComposition { get; set; }
-
+        public string Image { get; set; }
+        public DateTime DateOfCreation { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
 
-        public List<Chapter> Chapters { get; set; }
-        public List<TagComposition> Tags { get; set; }
+        public IEnumerable<Chapter> Chapters { get; set; }
+        public IEnumerable<TagComposition> Tags { get; set; }
 
 
         public Composition()
         {
-            Chapters = new List<Chapter>();
-            Tags = new List<TagComposition>();
+            Chapters = new HashSet<Chapter>();
+            Tags = new HashSet<TagComposition>();
         }
 
     }
