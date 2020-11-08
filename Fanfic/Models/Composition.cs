@@ -7,15 +7,15 @@ namespace Fanfic.Models
 {
     public enum Genre
     {
-        Fantasy,
-        Western,
-        Horror,
+        Biography,
         Classic,
+        Detective,
         FairyTale,
+        Fantasy,
+        Horror,  
         Humor,
         Thriller,
-        Biograpy,
-        Detective
+        Western
     }
     public class Composition
     {

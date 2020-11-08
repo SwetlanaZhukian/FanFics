@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5RUZUn0600YQ6oX9NKzogjSfDplLTev2Y+2B2u2nH2kHcSn6ZxYMS4Ctbt4ewyJAETXr/oZw34OHp6aEQiZPVQ==",
+  "dgSpecHash": "EkSev2OMLy4Us4TwBHRe6RA6RkV2UBrckSVcrYOgCa/pF+JfYpx8yJ1uYb1vGTllLnt6qsvSU0782aP7hRZ+jA==",
   "success": true,
   "projectFilePath": "D:\\Trainy\\Курсовой\\Fanfic\\Fanfic\\Fanfic.csproj",
   "expectedPackageFiles": [
@@ -171,7 +171,8 @@
     "C:\\Users\\Женька\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Женька\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Женька\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Женька\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\Женька\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\Женька\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512"
   ],
   "logs": []
 }

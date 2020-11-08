@@ -1,10 +1,126 @@
-﻿
+﻿@model Fanfic.Models.ViewModels.UserProfileWithPaginationViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>My profile</h1>
 <div>
-    <a  href="/Composition/Create">Create new composition</a>
+    <a href="/Composition/Create">Create new composition</a>
 </div>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <form method="get">
+        <div class="form-inline">
+            <label>Name: </label>
+            <input name="name" value="@Model.FilterViewModel.SelectedName" class="form-control" />
+
+            <label>Tags: </label>
+            <select name="tags" asp-items="Model.FilterViewModel.Tags" class="form-control"></select>
+            <input type="submit" value="Filtr" class="btn btn-outline-dark" />
+        </div>
+    </form>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NameSort)">
+                            Name
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DescriptionSort)">
+                            Description
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.GenreSort)">
+                            Genre
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfCreationSort)">
+                            Date of Creation
+                        </a>
+                    </th>
+                    <th scope="col">Tags</th>
+                    <th scope="col">
+                        <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NumberOfChaptersSort)">
+                            Number of chapters
+                        </a>
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProfileViewModels)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Genre</td>
+                        <td>@item.DateOfCreation.ToString("dd.MM.yyyy ")</td>
+                        <td>
+                            @foreach (var tag in item.Tags)
+                            {
+                                <h6>@tag.Name </h6>
+
+                            }
+                        </td>
+                        <td>@item.NumberOfChapters</td>
+
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination flex-wrap">
+            <li class="page-item @(Model.PageViewModel.HasPreviosPage ? " " : " disabled" )">
+                <a asp-route-Page="1" asp-route-sortorder="@(Model.SortViewModel.Current)"
+                   class="page-link" aria-label="Frist">
+                    <span aria-hidden="true">|<</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item @(Model.PageViewModel.HasPreviosPage ? " " : " disabled" )">
+                <a asp-route-Page="@(Model.PageViewModel.PageNumber -1)" asp-route-sortorder="@(Model.SortViewModel.Current)"
+                   class="page-link" aria-label="Next">
+                    <span aria-hidden="true"><</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            @for (var i = 1; i <= Model.PageViewModel.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageViewModel.PageNumber? " active" : "" )">
+                    <a asp-route-Page="@i" asp-route-sortorder="@(Model.SortViewModel.Current)" class="page-link">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.PageViewModel.HasNextPage ? " " : " disabled" )">
+                <a asp-route-Page="@(Model.PageViewModel.PageNumber + 1)" asp-route-sortorder="@(Model.SortViewModel.Current)"
+                   class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item @(Model.PageViewModel.HasNextPage ? " " : " disabled" )">
+                <a asp-route-Page="@Model.PageViewModel.TotalPages" asp-route-sortorder="@(Model.SortViewModel.Current)"
+                   class="page-link" aria-label="Last">
+                    <span aria-hidden="true">>|</span>
+                    <span class="sr-only">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
+
+
 

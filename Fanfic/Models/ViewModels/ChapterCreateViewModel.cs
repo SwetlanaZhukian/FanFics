@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Fanfic.Models.ViewModels
@@ -7,7 +9,11 @@ namespace Fanfic.Models.ViewModels
     {
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Content { get; set; }
+        [DisplayName ("Image")]
+        public IFormFile File { get; set; }
+       
     }
 }

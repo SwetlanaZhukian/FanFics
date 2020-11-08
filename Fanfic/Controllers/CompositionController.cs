@@ -1,10 +1,13 @@
-﻿using Fanfic.Models;
+﻿using Fanfic.Configuration;
+using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
 using Fanfic.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +18,7 @@ namespace Fanfic.Controllers
     {
         private readonly CompositionService compositionService;
         private readonly UserManager<User> userManager;
+       
         public CompositionController(CompositionService service, UserManager<User> _userManager)
         {
             compositionService = service;
@@ -59,8 +63,9 @@ namespace Fanfic.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateChapter(ChapterCreateViewModel chapterCreateViewModel, int id )
+        public IActionResult CreateChapter(ChapterCreateViewModel chapterCreateViewModel, int id)
         {
+           
             var composition = compositionService.FindComposition(id);
             if (composition == null)
             {

@@ -1,10 +1,14 @@
-﻿using Fanfic.Models;
+﻿using Fanfic.Configuration;
+using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,11 +17,11 @@ namespace Fanfic.Services
     public class CompositionService
     {
         private readonly ApplicationContext context;
-        private readonly UserManager<User> userManager;
-        public CompositionService(ApplicationContext context, UserManager<User> userManager)
+        private readonly IOptions<BlobConfig> options;
+        public CompositionService(ApplicationContext context,  IOptions<BlobConfig> blobOptions)
         {
             this.context = context;
-            this.userManager = userManager;
+            options = blobOptions;
         }
         public Composition CreateComposition(CompositionCreateViewModel viewModel, IdentityUser user)
         {
@@ -74,7 +78,7 @@ namespace Fanfic.Services
         }
 
         public string GetTags()
-        { 
+        {
             return string.Join(",", context.Tags.Select(x => x.Name).ToList());
         }
 
@@ -91,8 +95,13 @@ namespace Fanfic.Services
                 Content = model.Content,
                 Composition = composition,
                 CompositionId = composition.Id,
-                DateOfCreation = DateTime.Now    
+                DateOfCreation = DateTime.Now
             };
+
+            BlobStorageService objBlobService = new BlobStorageService(options);
+            string mimeType = model.File.ContentType;
+            byte[] fileData = new byte[model.File.Length];
+            chapter.Image = objBlobService.UploadFileToBlob(model.File.FileName, fileData, mimeType);
             context.Chapters.Add(chapter);
             context.SaveChanges();
         }
