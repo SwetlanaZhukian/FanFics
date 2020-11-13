@@ -158,11 +158,14 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Acc
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Administrator\Index.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Shared\NotFound.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\User\Index.cshtml.g.cs
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\Create.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\libman.json
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\SuccessfulCreate.cshtml.g.cs
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\CreateChapter.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csprojAssemblyReference.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Microsoft.WindowsAzure.Storage.dll
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\ReadComposition.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\Create.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\CreateChapter.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\SuccessfulCreate.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\ReadChapter.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csproj.CoreCompileInputs.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcApplicationPartsAssemblyInfo.cache
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditComposition.cshtml.g.cs

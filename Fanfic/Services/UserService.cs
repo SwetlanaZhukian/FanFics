@@ -2,6 +2,7 @@
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace Fanfic.Services
     public class UserService
     {
         private readonly ApplicationContext context;
-        public UserService(ApplicationContext applicationContext)
+        private readonly CompositionService compositionService;
+        public UserService(ApplicationContext applicationContext, CompositionService service)
         {
             context = applicationContext;
+            compositionService = service;
         }
         public List<UserProfileViewModel> GetUserCompositions(User user)
         {
@@ -22,14 +25,10 @@ namespace Fanfic.Services
             var compositions= context.Compositions.Where(p => p.UserId == user.Id).Include(x=>x.Tags).Include(t=>t.Chapters).ToList();
             foreach (var item in compositions)
             {
-                List<Tag> tags = new List<Tag>();
-                foreach (var tagComposition in item.Tags)
-                {
-                    var tag = context.Tags.FirstOrDefault(x => x.Id == tagComposition.TagId);
-                    tags.Add(tag);
-                }
+                List<Tag> tags = compositionService.GetTagsForComposition(item);
                 UserProfileViewModel userProfileViewModel = new UserProfileViewModel
                 {
+                    Id=item.Id,
                     Name = item.Name,
                     Description = item.Description,
                     DateOfCreation = item.DateOfCreation,
@@ -43,7 +42,7 @@ namespace Fanfic.Services
             }
             return userProfileViewModels;
         }
-        public UserProfileWithPaginationViewModel GetProfileWithPaginationView(int? tag,  string name ,List<UserProfileViewModel> model, SortState sortOrder,int page)
+        public UserProfileWithPaginationViewModel GetProfileWithPaginationView(int? tag,Genre genre , string name ,List<UserProfileViewModel> model, SortState sortOrder,int page)
         {
             int pageSize = 10;
             model = SortUserProfileViewModel(model, sortOrder);
@@ -54,7 +53,7 @@ namespace Fanfic.Services
                 PageViewModel = new PageViewModel(count, page, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
                 ProfileViewModels = items,
-                FilterViewModel = new FilterViewModel(context.Tags.ToList(), tag, name),
+                FilterViewModel = new FilterViewModel(context.Tags.ToList(), genre, tag, name),
             };
             return userProfileWithPaginationViewModel;
         }
@@ -75,5 +74,20 @@ namespace Fanfic.Services
             };
             return model;
         }
+        public List<UserProfileViewModel> FilterByTag(List<UserProfileViewModel> model, int? tag)
+        {
+            var tagFromDatabase = context.Tags.FirstOrDefault(p => p.Id == tag);
+            model = model.Where(p => p.Tags.Contains(tagFromDatabase)).ToList();
+            return model;
+        }
+        public List<UserProfileViewModel> FilterByName(List<UserProfileViewModel> model, string name)
+        {
+          return model.Where(p => p.Name.Contains(name)).ToList();
+        }
+        public List<UserProfileViewModel> FilterByGenre(List<UserProfileViewModel> model, Genre genre)
+        {
+            return model.Where(p => p.Genre == genre).ToList();
+        }
+       
     }
 }

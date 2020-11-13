@@ -1,0 +1,87 @@
+﻿@model Fanfic.Models.ViewModels.CompositionViewModel
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            ul.hr {
+                margin: 0;
+                padding: 4px;
+            }
+
+                ul.hr li {
+                    display: inline-block;
+                    margin-right: 5px;
+                    border: 1px solid #000;
+                    padding: 3px;
+                }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-6">
+                <div class="card bg-light ">
+                    <h5 class="card-header">@Model.Name</h5>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.AuthorName)
+                            </dt>
+                            <dd class="col-sm-8 ">
+                                @Html.DisplayFor(model => model.AuthorName)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Genre)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Genre)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Tags)
+                            </dt>
+                            <dd class="col-sm-8">
+                                <ul class="hr">
+                                    @foreach (var tag in Model.Tags)
+                                    {
+
+                                        <li> @tag.Name</li>
+
+                                    }
+                                </ul>
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.DateOfCreation)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.DateOfCreation)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+           @if (Model.Chapters.Count() != 0)
+           {
+            <div class="col-6">
+                <h2>Contents</h2>
+                <ul class="list-group">
+                    @foreach (var chapter in Model.Chapters)
+                    {
+                    <a asp-action="ReadChapter" asp-controller="Composition" asp-route-id="@(chapter.Id)" class="list-group-item list-group-item-action">@chapter.Name</a>
+                        @*<li class="list-group-item">@chapter.Name</li>*@
+
+                    }
+                </ul>
+                </div>
+           }
+           else { 
+               <h2>This composition is empty!</h2>
+           }
+        </div>
+     
+    </body>
+</html>

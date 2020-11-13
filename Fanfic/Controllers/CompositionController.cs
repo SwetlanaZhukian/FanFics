@@ -18,16 +18,15 @@ namespace Fanfic.Controllers
     {
         private readonly CompositionService compositionService;
         private readonly UserManager<User> userManager;
-       
-        public CompositionController(CompositionService service, UserManager<User> _userManager)
+        ApplicationContext context;
+
+        public CompositionController(CompositionService service, UserManager<User> _userManager, ApplicationContext context)
         {
             compositionService = service;
             userManager = _userManager;
+            this.context = context;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
 
         public IActionResult Create()
         {
@@ -52,40 +51,94 @@ namespace Fanfic.Controllers
             var composition = compositionService.FindComposition(id);
             if (composition == null)
             {
-              return  RedirectToAction("Error");
+                return RedirectToAction("Error");
             }
 
             return View(composition);
         }
 
-        public IActionResult CreateChapter(int id )
+        public IActionResult CreateChapter()
         {
             return View();
         }
         [HttpPost]
         public IActionResult CreateChapter(ChapterCreateViewModel chapterCreateViewModel, int id)
         {
-           
+
             var composition = compositionService.FindComposition(id);
             if (composition == null)
             {
                 return RedirectToAction("Error");
             }
-            else 
+            else
             {
                 if (ModelState.IsValid)
                 {
                     compositionService.CreateChapter(chapterCreateViewModel, composition);
                 }
             }
-     
+
             return View();
         }
+        [HttpPost]
+        public IActionResult DeleteComposition(int id)
+        {
+            var composition = compositionService.FindComposition(id);
+            if (composition == null)
+            {
+                return RedirectToAction("Error");
+            }
+            compositionService.DeleteComposition(composition);
+            return RedirectToAction("Index", "User");
+        }
 
+        public IActionResult ReadComposition(int id)
+        {
+            var composition = compositionService.FindComposition(id);
+            if (composition == null)
+            {
+                return RedirectToAction("Error");
+            }
+            var compositionViewModel = compositionService.GetCompositionViewModel(composition);
+            return View(compositionViewModel);
+        }
         public ActionResult GetTag()
         {
             var token = compositionService.GetTags();
             return Json(new { data = token.Split(',') });
+         
+        }
+    
+      
+        public ActionResult ReadChapter(int id)
+        {
+            var chapter = compositionService.GetChapter(id);
+            if (chapter == null)
+            {
+                ViewBag.ErrorMessage = "Chapter cannot be found";
+                return View("NotFound");
+
+            }
+
+            return View(chapter);
+        }
+
+      
+        public IActionResult EditComposition(int id)
+        {
+            var composition = compositionService.FindComposition(id);
+            if (composition == null)
+            {
+                return RedirectToAction("Error");
+            }
+            var compositionViewModel = compositionService.GetCompositionViewModel(composition);
+            return View(compositionViewModel);
+           
+        }
+        [HttpPost]
+        public IActionResult EditComposition(CompositionViewModel compositionView)
+        {
+            return View();
         }
         public IActionResult Error()
         {

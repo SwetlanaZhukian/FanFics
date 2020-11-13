@@ -31,24 +31,7 @@ namespace Fanfic.Services
                 throw (ex);
             }
         }
-        public async void DeleteBlobData(string fileUrl)
-        {
-            Uri uriObj = new Uri(fileUrl);
-            string BlobName = Path.GetFileName(uriObj.LocalPath);
-
-            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
-            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
-            string strContainerName = "uploads";
-            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(strContainerName);
-
-            string pathPrefix = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + "/";
-            CloudBlobDirectory blobDirectory = cloudBlobContainer.GetDirectoryReference(pathPrefix);
-           
-            CloudBlockBlob blockBlob = blobDirectory.GetBlockBlobReference(BlobName);
-   
-            await blockBlob.DeleteAsync();
-        }
-
+      
 
         private string GenerateFileName(string fileName)
         {

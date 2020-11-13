@@ -7,7 +7,7 @@ namespace Fanfic.Models
 {
     public enum Genre
     {
-        Biography,
+        Biography=1,
         Classic,
         Detective,
         FairyTale,

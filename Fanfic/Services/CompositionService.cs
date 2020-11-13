@@ -5,6 +5,7 @@ using Fanfic.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Fanfic.Services
     {
         private readonly ApplicationContext context;
         private readonly IOptions<BlobConfig> options;
-        public CompositionService(ApplicationContext context,  IOptions<BlobConfig> blobOptions)
+        public CompositionService(ApplicationContext context, IOptions<BlobConfig> blobOptions)
         {
             this.context = context;
             options = blobOptions;
@@ -80,11 +81,12 @@ namespace Fanfic.Services
         public string GetTags()
         {
             return string.Join(",", context.Tags.Select(x => x.Name).ToList());
+          
         }
 
         public Composition FindComposition(int id)
         {
-            var composition = context.Compositions.FirstOrDefault(x => x.Id == id);
+            var composition = context.Compositions.Include(p=>p.User).Include(x=>x.Tags).Include(k=>k.Chapters).FirstOrDefault(x => x.Id == id);
             return composition;
         }
         public void CreateChapter(ChapterCreateViewModel model, Composition composition)
@@ -99,11 +101,54 @@ namespace Fanfic.Services
             };
 
             BlobStorageService objBlobService = new BlobStorageService(options);
-            string mimeType = model.File.ContentType;
             byte[] fileData = new byte[model.File.Length];
+            string mimeType = model.File.ContentType;
+            using (var target = new MemoryStream())
+            {
+                model.File.CopyTo(target);
+                fileData = target.ToArray();
+            }  
             chapter.Image = objBlobService.UploadFileToBlob(model.File.FileName, fileData, mimeType);
             context.Chapters.Add(chapter);
             context.SaveChanges();
         }
+
+        public CompositionViewModel GetCompositionViewModel(Composition composition)
+        {
+            List<Tag> tags = GetTagsForComposition(composition);
+            CompositionViewModel compositionViewModel = new CompositionViewModel
+            {
+                Name = composition.Name,
+                AuthorName = composition.User.Name,
+                Genre = composition.GenreOfComposition,
+                Description = composition.Description,
+                DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
+                Tags=tags,
+                Chapters=composition.Chapters
+
+            };
+            return compositionViewModel;
+        }
+        public void DeleteComposition(Composition composition)
+        {
+            context.Compositions.Remove(composition);
+            context.SaveChanges();
+        }
+        public List<Tag> GetTagsForComposition(Composition composition)
+        {
+            List<Tag> tags = new List<Tag>();
+            foreach (var tagComposition in composition.Tags)
+            {
+                var tag = context.Tags.FirstOrDefault(p => p.Id == tagComposition.TagId);
+                tags.Add(tag);
+            }
+            return tags;
+        }
+        public Chapter GetChapter(int id)
+        {
+            var chapter = context.Chapters.FirstOrDefault(x => x.Id == id);
+            return chapter;
+        }
+        
     }
 }
