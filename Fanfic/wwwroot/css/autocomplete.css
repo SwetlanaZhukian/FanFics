@@ -1,0 +1,12 @@
+﻿
+    .ui-menu .ui-menu-item:hover
+
+{
+    display: block;
+    text-decoration: none;
+    color: #3D3D3D;
+    cursor: pointer;
+    background-color: lightgray;
+    background-image: none;
+    border: 1px solid lightgray;
+}

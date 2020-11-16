@@ -9,9 +9,9 @@
     You can add a chapter now or later.
 </h3>
 <hr />
-<form method="post" asp-action="CreateChapter" asp-route-id="@Model.Id">
-    <button type="submit" class="btn btn-success">Add chapter</button>
-</form>
+
+    <a asp-controller="Composition" asp-action="CreateChapter" asp-route-id="@Model.Id" type="submit" class="btn btn-success">Add chapter</a>
+
 <div>
     <a href="/User/Index">Back to profile</a>
 </div>

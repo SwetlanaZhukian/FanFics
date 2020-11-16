@@ -14,6 +14,8 @@
                     border: 1px solid #000;
                     padding: 3px;
                 }
+
+         
         </style>
     </head>
     <body>
@@ -66,17 +68,19 @@
             </div>
            @if (Model.Chapters.Count() != 0)
            {
-            <div class="col-6">
-                <h2>Contents</h2>
-                <ul class="list-group">
-                    @foreach (var chapter in Model.Chapters)
-                    {
-                    <a asp-action="ReadChapter" asp-controller="Composition" asp-route-id="@(chapter.Id)" class="list-group-item list-group-item-action">@chapter.Name</a>
-                        @*<li class="list-group-item">@chapter.Name</li>*@
+        <div class="col-6">
+            <h2>Contents</h2>
+           
+            <div class="list-group list-group-flush">
 
-                    }
-                </ul>
-                </div>
+                @for (int i = 0; i < Model.Chapters.Count(); i++)
+                {
+                <a asp-action="ReadChapter" asp-controller="Composition" asp-route-compositionId="@Model.Id"
+                   asp-route-chapterIndex="@i" asp-route-id="@(Model.Chapters.ElementAt(i).Id)" class="list-group-item list-group-item-action">@Model.Chapters.ElementAt(i).Name</a>
+                }
+                
+            </div>
+        </div>
            }
            else { 
                <h2>This composition is empty!</h2>

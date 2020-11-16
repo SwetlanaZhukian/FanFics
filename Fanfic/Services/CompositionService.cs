@@ -37,20 +37,7 @@ namespace Fanfic.Services
             };
             context.Compositions.Add(composition);
             context.SaveChanges();
-            object[] tags = viewModel.Tags.Split(",");
-            foreach (var tag in tags)
-            {
-                if (!(context.Tags.Select(p => p.Name).Contains(tag.ToString())))
-                {
-                    Tag tagNew = CreateTag(tag);
-                    CreateTagComposition(tagNew, composition);
-                }
-                else
-                {
-                    var tagExisting = context.Tags.FirstOrDefault(p => p.Name == tag.ToString());
-                    CreateTagComposition(tagExisting, composition);
-                }
-            }
+            AddTagToComposition(viewModel.Tags, composition);
             return composition;
         }
         public Tag CreateTag(object tagFromView)
@@ -81,12 +68,12 @@ namespace Fanfic.Services
         public string GetTags()
         {
             return string.Join(",", context.Tags.Select(x => x.Name).ToList());
-          
+
         }
 
         public Composition FindComposition(int id)
         {
-            var composition = context.Compositions.Include(p=>p.User).Include(x=>x.Tags).Include(k=>k.Chapters).FirstOrDefault(x => x.Id == id);
+            var composition = context.Compositions.Include(p => p.User).Include(x => x.Tags).Include(k => k.Chapters).FirstOrDefault(x => x.Id == id);
             return composition;
         }
         public void CreateChapter(ChapterCreateViewModel model, Composition composition)
@@ -100,17 +87,23 @@ namespace Fanfic.Services
                 DateOfCreation = DateTime.Now
             };
 
-            BlobStorageService objBlobService = new BlobStorageService(options);
-            byte[] fileData = new byte[model.File.Length];
-            string mimeType = model.File.ContentType;
-            using (var target = new MemoryStream())
-            {
-                model.File.CopyTo(target);
-                fileData = target.ToArray();
-            }  
-            chapter.Image = objBlobService.UploadFileToBlob(model.File.FileName, fileData, mimeType);
+            chapter.Image = SaveImage(model.File);
             context.Chapters.Add(chapter);
             context.SaveChanges();
+        }
+
+        public string SaveImage(IFormFile file)
+        {
+            BlobStorageService objBlobService = new BlobStorageService(options);
+            byte[] fileData = new byte[file.Length];
+            string mimeType = file.ContentType;
+            using (var target = new MemoryStream())
+            {
+                file.CopyTo(target);
+                fileData = target.ToArray();
+            }
+            string imagePath = objBlobService.UploadFileToBlob(file.FileName, fileData, mimeType);
+            return imagePath;
         }
 
         public CompositionViewModel GetCompositionViewModel(Composition composition)
@@ -118,13 +111,15 @@ namespace Fanfic.Services
             List<Tag> tags = GetTagsForComposition(composition);
             CompositionViewModel compositionViewModel = new CompositionViewModel
             {
+                Id = composition.Id,
                 Name = composition.Name,
                 AuthorName = composition.User.Name,
                 Genre = composition.GenreOfComposition,
                 Description = composition.Description,
                 DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
-                Tags=tags,
-                Chapters=composition.Chapters
+                Tags = tags,
+                Chapters = composition.Chapters,
+                TagsForEdit = string.Join(",", tags.Select(x => x.Name))
 
             };
             return compositionViewModel;
@@ -149,6 +144,92 @@ namespace Fanfic.Services
             var chapter = context.Chapters.FirstOrDefault(x => x.Id == id);
             return chapter;
         }
-        
+        public void EditComposition(CompositionViewModel compositionViewModel)
+        {
+            var composition = FindComposition(compositionViewModel.Id);
+            RemoveTagComposition(composition);
+
+            composition.Name = compositionViewModel.Name;
+            composition.GenreOfComposition = compositionViewModel.Genre;
+            composition.Description = compositionViewModel.Description;
+
+            AddTagToComposition(compositionViewModel.TagsForEdit, composition);
+
+            context.Compositions.Update(composition);
+            context.SaveChanges();
+        }
+        public void AddTagToComposition(string tagsFromViewModel, Composition composition)
+        {
+            var tagsWithoutSpaces = String.Join("", tagsFromViewModel.Where(c => !char.IsWhiteSpace(c)));
+            string[] tags = tagsWithoutSpaces.Split(",");
+            foreach (var tag in tags)
+            {
+                if (!(context.Tags.Select(p => p.Name).Contains(tag)))
+                {
+                    Tag tagNew = CreateTag(tag);
+                    CreateTagComposition(tagNew, composition);
+                }
+                else
+                {
+                    var tagExisting = context.Tags.FirstOrDefault(p => p.Name == tag);
+
+                    CreateTagComposition(tagExisting, composition);
+                }
+
+            }
+        }
+
+        public void RemoveTagComposition(Composition composition)
+        {
+            var tagComposition = context.TagCompositions.Where(p => p.CompositionId == composition.Id);
+            context.RemoveRange(tagComposition);
+            context.SaveChanges();
+        }
+        public EditChapterViewModel GetEditChapterViewModel(Chapter chapter)
+        {
+            EditChapterViewModel editChapterViewModel = new EditChapterViewModel
+            {
+                ChapterId = chapter.Id,
+                Name = chapter.Name,
+                Content = chapter.Content
+            };
+            return editChapterViewModel;
+        }
+        public void EditChapter(EditChapterViewModel editChapterViewModel)
+        {
+            var chapter = GetChapter(editChapterViewModel.ChapterId);
+            chapter.CompositionId = editChapterViewModel.CompositionId;
+            chapter.Name = editChapterViewModel.Name;
+            chapter.Content = editChapterViewModel.Content;
+            chapter.DateOfUpdate = DateTime.Now;
+            if (editChapterViewModel.File != null)
+            {
+                chapter.Image = SaveImage(editChapterViewModel.File);
+            }
+
+            context.Chapters.Update(chapter);
+            context.SaveChanges();
+
+        }
+        public void DeleteChapter(Chapter chapter)
+        {
+            context.Chapters.Remove(chapter);
+            context.SaveChanges();
+        }
+        public ChaptersWhithPaginationViewModel GetChaptersWhithPaginationView(int page, int compositionId)
+        {
+            int pageSize = 1;
+            var composition = FindComposition(compositionId);
+            PageViewModel pageViewModel = new PageViewModel(composition.Chapters.Count(), page, pageSize);
+            ChaptersWhithPaginationViewModel chaptersWhithPaginationViewModel = new ChaptersWhithPaginationViewModel
+            { 
+                PageViewModel=pageViewModel,
+                Chapters=composition.Chapters
+            };
+          
+            return chaptersWhithPaginationViewModel;
+        }
     }
+
 }
+

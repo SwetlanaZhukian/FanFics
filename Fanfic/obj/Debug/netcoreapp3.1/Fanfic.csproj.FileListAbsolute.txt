@@ -169,3 +169,5 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Com
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csproj.CoreCompileInputs.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcApplicationPartsAssemblyInfo.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditComposition.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditChapter.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\_ChapterNavigationPartial.cshtml.g.cs

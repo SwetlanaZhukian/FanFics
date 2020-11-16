@@ -69,5 +69,10 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.image-chapter {
+    border-radius: 16px;
+    width: 300px;
+    object-fit: scale-down;
+}
 
 

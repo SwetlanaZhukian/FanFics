@@ -1,0 +1,23 @@
+﻿@model Fanfic.Models.ViewModels.CompositionViewModel
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item  @((bool)ViewData["IsFirst"]?"disabled":"")">
+            <a class="page-link" asp-controller="Composition"
+               asp-action="ReadChapter"
+               asp-route-compositionId="@Model.Id"
+               asp-route-chapterIndex=@(ViewData["PreviousIndex"])>Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-controller="Composition"
+               asp-action="ReadComposition"
+               asp-route-id="@Model.Id">Contents</a>
+        </li>
+        <li class="page-item @((bool)ViewData["IsLast"]?"disabled":"")">
+            <a class="page-link" asp-controller="Composition"
+               asp-action="ReadChapter"
+               asp-route-compositionId="@Model.Id"
+               asp-route-chapterIndex=@(ViewData["NextIndex"])>Next</a>
+        </li>
+    </ul>
+</nav>

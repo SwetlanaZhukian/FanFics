@@ -26,6 +26,10 @@
     {
       "library": "dropzone@5.7.2",
       "destination": "wwwroot/lib/dropzone/"
+    },
+    {
+      "library": "blueimp-file-upload@10.31.0",
+      "destination": "wwwroot/lib/blueimp-file-upload/"
     }
   ]
 }

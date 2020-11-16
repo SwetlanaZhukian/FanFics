@@ -7,13 +7,14 @@ namespace Fanfic.Models.ViewModels
 {
     public class ChapterCreateViewModel
     {
+        public int CompositionId { get; set; }
         [Required]
         public string Name { get; set; }
 
         [Required]
         public string Content { get; set; }
         [Required]
-        [DisplayName ("Image")]
+        [DisplayName("Image")]
         public IFormFile File { get; set; }
        
     }

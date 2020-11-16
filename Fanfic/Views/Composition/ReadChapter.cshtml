@@ -1,12 +1,13 @@
-﻿@model Fanfic.Models.Chapter
+﻿
+@model Fanfic.Models.ViewModels.CompositionViewModel
 
-@{
-    ViewData["Title"] = "ReadChapter";
-}
 
-<h1>@Model.Name</h1>
-<div>
-    <img src="@Model.Image" width="100" height="80" />
-        @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
-        
-</div>
+
+    @await Html.PartialAsync("_ChapterNavigationPartial", Model)
+    <h1> @Model.Chapters.ElementAt((int)ViewData["Index"]).Name</h1>
+    <div>
+        <img src="@Model.Chapters.ElementAt((int)ViewData["Index"]).Image" width="100" height="80" />
+        @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Chapters.ElementAt((int)ViewData["Index"]).Content))
+    </div>
+   
+    @await Html.PartialAsync("_ChapterNavigationPartial", Model)

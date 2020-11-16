@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="~/css/Typehead.css" rel="stylesheet" />
+    <link href="~/css/autocomplete.css" rel="stylesheet" />
     <link href="~/css/validation.css" rel="stylesheet" />
 </head>
 <body>
@@ -44,7 +44,7 @@
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index"  asp-controller="User">Back to List</a>
     </div>
 
 
@@ -60,8 +60,13 @@
                         console.log(v);
 
                     });
-
-                    $('#token').tokenfield({
+                    $('#token').on('tokenfield:createtoken', function (event) {
+                        var existingTokens = $(this).tokenfield('getTokens');
+                        $.each(existingTokens, function (index, token) {
+                            if (token.value === event.attrs.value)
+                                event.preventDefault();
+                        });
+                    }).tokenfield({
                         autocomplete: {
                             source: token,
                             focus: (function () {
@@ -75,45 +80,6 @@
 
             });
 
-            //$(document).ready(function () {
-
-            //    var token = [];
-            //    var engine;
-            //    $.get("/Composition/GetTag", function (response) {
-
-            //        $.each(response.data, function (i, v) {
-            //            token.push({ value: v });
-            //            console.log(v);
-
-            //        });
-
-            //        engine = new Bloodhound({
-
-            //            local: token,
-            //            datumTokenizer: function (d) {
-            //                return Bloodhound.tokenizers.whitespace(d.value);
-            //            },
-            //            queryTokenizer: Bloodhound.tokenizers.whitespace
-            //        });
-
-            //        engine.initialize();
-
-            //        console.log(token);
-
-            //        $('#token').on('tokenfield:createtoken', function (event) {
-            //            var existingTokens = $(this).tokenfield('getTokens');
-            //            $.each(existingTokens, function (index, token) {
-            //                if (token.value === event.attrs.value)
-            //                    event.preventDefault();
-            //            });
-            //        }).tokenfield({
-
-            //            typeahead: [null, { displayKey: 'value', source: engine.ttAdapter() }]
-
-            //        });
-            //    });
-
-            //});
 
         </script>
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
