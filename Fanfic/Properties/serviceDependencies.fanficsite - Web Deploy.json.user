@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "storage1": {
+      "restored": true,
+      "restoreTime": "2020-11-18T13:46:35.929191Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2020-11-18T13:54:10.0068667Z"
+    }
+  },
+  "parameters": {
+    "fanficsite.resourceGroupLocation": {
+      "Type": null,
+      "Value": "centralus"
+    },
+    "fanficsite.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "Fanfic"
+    },
+    "mssql1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "21efa8d4-899a-4e93-8f06-605d4f1a9bf1"
+    },
+    "mssql1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "Fanfic"
+    },
+    "fanficsite.resourceName": {
+      "Type": null,
+      "Value": "fanficsite"
+    },
+    "fanficsite.subscriptionId": {
+      "Type": "subscription",
+      "Value": "21efa8d4-899a-4e93-8f06-605d4f1a9bf1"
+    },
+    "subscriptionId": {
+      "Type": "subscription",
+      "Value": "21efa8d4-899a-4e93-8f06-605d4f1a9bf1"
+    }
+  }
+}

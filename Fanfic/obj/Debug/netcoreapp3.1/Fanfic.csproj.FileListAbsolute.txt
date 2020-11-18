@@ -171,3 +171,7 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcAppli
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditComposition.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditChapter.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\_ChapterNavigationPartial.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.fanficsite - Web Deploy.json
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\fanficsite - Web Deploy\mssql1.arm.json
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\fanficsite - Web Deploy\profile.arm.json

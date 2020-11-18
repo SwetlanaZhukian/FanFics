@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="fanficsite" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Trainy\\Курсовой\\Fanfic\\Fanfic\\obj\\Release\\netcoreapp3\.1\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="Fanfic.Models.Context.ApplicationContext" description="" value="Server=tcp:fanficdbserver.database.windows.net,1433;Initial Catalog=Fanfic_db;Persist Security Info=False;User ID=Swetlana; Password=9538151059s.;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^D:\\Trainy\\Курсовой\\Fanfic\\Fanfic\\obj\\Release\\netcoreapp3\.1\\PubTmp\\EFSQLScripts\\Fanfic\.Models\.Context\.ApplicationContext\.sql$" />
+  </parameter>
+</parameters>

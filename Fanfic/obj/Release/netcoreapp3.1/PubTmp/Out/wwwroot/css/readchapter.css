@@ -1,0 +1,15 @@
+﻿
+pre {
+    font-family: serif font-size: 100%;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.image-chapter {
+    border-radius: 16px;
+    width: 300px;
+    object-fit: scale-down;
+}
