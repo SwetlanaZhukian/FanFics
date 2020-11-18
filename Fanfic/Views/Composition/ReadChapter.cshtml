@@ -1,13 +1,20 @@
-﻿
-@model Fanfic.Models.ViewModels.CompositionViewModel
+﻿@model Fanfic.Models.ViewModels.CompositionViewModel
+<link href="~/css/readchapter.css" rel="stylesheet" />
+
+@await Html.PartialAsync("_ChapterNavigationPartial", Model)
+
+<div class="container h-100 border overflow-hidden m-md-5 p-4 pl-md-4 chapter">
+    <h1 class="text-center "> @Model.Chapters.ElementAt((int)ViewData["Index"]).Name</h1>
+    <div class="col text-break">
+        <pre>
+        <img src="@Model.Chapters.ElementAt((int)ViewData["Index"]).Image" class=" image-chapter float-left p-3" />
 
 
-
-    @await Html.PartialAsync("_ChapterNavigationPartial", Model)
-    <h1> @Model.Chapters.ElementAt((int)ViewData["Index"]).Name</h1>
-    <div>
-        <img src="@Model.Chapters.ElementAt((int)ViewData["Index"]).Image" width="100" height="80" />
-        @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Chapters.ElementAt((int)ViewData["Index"]).Content))
+      
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Chapters.ElementAt((int)ViewData["Index"]).Content))
+        
+        </pre>
     </div>
-   
-    @await Html.PartialAsync("_ChapterNavigationPartial", Model)
+
+</div>
+@await Html.PartialAsync("_ChapterNavigationPartial", Model)

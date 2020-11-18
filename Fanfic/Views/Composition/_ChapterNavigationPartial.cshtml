@@ -1,7 +1,8 @@
-﻿@model Fanfic.Models.ViewModels.CompositionViewModel
+﻿
+@model Fanfic.Models.ViewModels.CompositionViewModel
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
+<nav>
+    <ul class="pagination justify-content-center ">
         <li class="page-item  @((bool)ViewData["IsFirst"]?"disabled":"")">
             <a class="page-link" asp-controller="Composition"
                asp-action="ReadChapter"
