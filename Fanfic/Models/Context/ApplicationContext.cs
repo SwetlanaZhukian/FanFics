@@ -16,6 +16,7 @@ namespace Fanfic.Models.Context
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagComposition> TagCompositions { get; set; }
+        public DbSet<Rating> Ratings{ get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
           : base(options)
@@ -27,18 +28,30 @@ namespace Fanfic.Models.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<TagComposition>()
-                .HasKey(sc => new { sc.TagId, sc.CompositionId });
+                .HasKey(tc => new { tc.TagId, tc.CompositionId });
 
             modelBuilder.Entity<TagComposition>()
-                .HasOne(sc => sc.Composition)
-                .WithMany(s => s.Tags)
-                .HasForeignKey(sc => sc.CompositionId);
+                .HasOne(tc => tc.Composition)
+                .WithMany(t => t.Tags)
+                .HasForeignKey(tc => tc.CompositionId);
 
             modelBuilder.Entity<TagComposition>()
-                .HasOne(sc => sc.Tag)
+                .HasOne(tc => tc.Tag)
                 .WithMany(c => c.Compositions)
-                .HasForeignKey(sc => sc.TagId);
+                .HasForeignKey(tc => tc.TagId);
 
+            modelBuilder.Entity<Rating>()
+                .HasKey(r => new { r.UserId, r.CompositionId });
+
+            modelBuilder.Entity<Rating>()
+                .HasOne(r=>r.Composition)
+                .WithMany(c => c.Ratings)
+                .HasForeignKey(r => r.CompositionId);
+
+            modelBuilder.Entity<Rating>()
+               .HasOne(r => r.User)
+               .WithMany(u => u.Ratings)
+               .HasForeignKey(r => r.UserId);
         }
 
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)

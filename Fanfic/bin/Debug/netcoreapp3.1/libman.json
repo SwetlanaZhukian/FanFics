@@ -30,6 +30,19 @@
     {
       "library": "blueimp-file-upload@10.31.0",
       "destination": "wwwroot/lib/blueimp-file-upload/"
+    },
+    {
+      "library": "bootstrap-star-rating@4.0.6",
+      "destination": "wwwroot/lib/bootstrap-star-rating/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@neos21/bootstrap3-glyphicons@1.0.7",
+      "destination": "wwwroot/lib/neos21/bootstrap3-glyphicons/",
+      "files": [
+        "dist/css/bootstrap3-glyphicons.css",
+        "dist/css/bootstrap3-glyphicons.min.css"
+      ]
     }
   ]
 }

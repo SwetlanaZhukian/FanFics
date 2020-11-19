@@ -73,7 +73,12 @@ namespace Fanfic.Services
 
         public Composition FindComposition(int id)
         {
-            var composition = context.Compositions.Include(p => p.User).Include(x => x.Tags).Include(k => k.Chapters).FirstOrDefault(x => x.Id == id);
+            var composition = context.Compositions
+                .Include(p => p.User)
+                .Include(x => x.Tags)
+                .Include(k => k.Chapters)
+                .Include(r => r.Ratings)
+                .FirstOrDefault(x => x.Id == id);
             return composition;
         }
         public void CreateChapter(ChapterCreateViewModel model, Composition composition)
@@ -106,7 +111,7 @@ namespace Fanfic.Services
             return imagePath;
         }
 
-        public CompositionViewModel GetCompositionViewModel(Composition composition)
+        public CompositionViewModel GetCompositionViewModel(Composition composition, string userId)
         {
             List<Tag> tags = GetTagsForComposition(composition);
             CompositionViewModel compositionViewModel = new CompositionViewModel
@@ -119,10 +124,25 @@ namespace Fanfic.Services
                 DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
                 Tags = tags,
                 Chapters = composition.Chapters,
-                TagsForEdit = string.Join(",", tags.Select(x => x.Name))
+                TagsForEdit = string.Join(",", tags.Select(x => x.Name)),   
 
             };
+            compositionViewModel.Rating = composition.Ratings.Count > 0 ? composition.Ratings.Average(r => r.RatingValue) : 0;
+             
+            var rating = FindRatingForCompositionFromUser(composition.Id, userId);
+            if (rating != null)
+            {
+                compositionViewModel.CurrentUserRating = rating.RatingValue;
+            }
+            else
+            {
+                compositionViewModel.CurrentUserRating = 0;
+            }
             return compositionViewModel;
+        }
+        public Rating FindRatingForCompositionFromUser(int compositionId, string userId)
+        {
+            return context.Ratings.FirstOrDefault(u => u.UserId == userId && u.CompositionId == compositionId);
         }
         public void DeleteComposition(Composition composition)
         {
@@ -222,13 +242,42 @@ namespace Fanfic.Services
             var composition = FindComposition(compositionId);
             PageViewModel pageViewModel = new PageViewModel(composition.Chapters.Count(), page, pageSize);
             ChaptersWhithPaginationViewModel chaptersWhithPaginationViewModel = new ChaptersWhithPaginationViewModel
-            { 
-                PageViewModel=pageViewModel,
-                Chapters=composition.Chapters
+            {
+                PageViewModel = pageViewModel,
+                Chapters = composition.Chapters
             };
-          
+
             return chaptersWhithPaginationViewModel;
         }
+        public async Task CreateRating(float stars, int compositionId, string userId)
+        {
+            var rating = new Rating
+            {
+                CompositionId = compositionId,
+                UserId = userId,
+                RatingValue = stars
+
+
+            };
+            if (context.Ratings.Any(x => x.UserId == userId && x.CompositionId == compositionId))
+            {
+                context.Ratings.Update(rating);
+            }
+            else
+            {
+                await context.Ratings.AddAsync(rating);
+            }
+
+
+            await context.SaveChangesAsync();
+        }
+        public void RemoveRating(string userId, int compositionId)
+        {
+            var rating = FindRatingForCompositionFromUser(compositionId, userId);
+            context.Ratings.Remove(rating);
+            context.SaveChanges();
+        }
+
     }
 
 }

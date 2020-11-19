@@ -3,6 +3,7 @@ using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
 using Fanfic.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,6 @@ namespace Fanfic.Controllers
 
         ApplicationContext context;
         private readonly IOptions<BlobConfig> options;
-
 
         public CompositionController(CompositionService service, UserManager<User> _userManager, ApplicationContext context, IOptions<BlobConfig> options)
         {
@@ -103,12 +103,13 @@ namespace Fanfic.Controllers
 
         public IActionResult ReadComposition(int id)
         {
+            var userId = FindUserId();
             var composition = compositionService.FindComposition(id);
             if (composition == null)
             {
                 return RedirectToAction("Error");
             }
-            var compositionViewModel = compositionService.GetCompositionViewModel(composition);
+            var compositionViewModel = compositionService.GetCompositionViewModel(composition, userId);
             return View(compositionViewModel);
         }
         public ActionResult GetTag()
@@ -121,8 +122,9 @@ namespace Fanfic.Controllers
         [HttpGet]
         public IActionResult ReadChapter(int compositionId, int chapterIndex)
         {
+            var userId = FindUserId();
             var composition = compositionService.FindComposition(compositionId);
-            CompositionViewModel model = compositionService.GetCompositionViewModel(composition);
+            CompositionViewModel model = compositionService.GetCompositionViewModel(composition,userId);
 
             ViewData["PreviousIndex"] = null;
             ViewData["NextIndex"] = null;
@@ -169,12 +171,13 @@ namespace Fanfic.Controllers
 
         public IActionResult EditComposition(int id)
         {
+            var userId = FindUserId();
             var composition = compositionService.FindComposition(id);
             if (composition == null)
             {
                 return RedirectToAction("Error");
             }
-            var compositionViewModel = compositionService.GetCompositionViewModel(composition);
+            var compositionViewModel = compositionService.GetCompositionViewModel(composition,userId);
             return View(compositionViewModel);
 
         }
@@ -230,6 +233,26 @@ namespace Fanfic.Controllers
             ViewBag.ErrorMessage = "Composition cannot be found";
             return View("NotFound");
         }
+      
+        [HttpPost]
+        public async Task Rate(float stars, int id)
+        {
+            var userId = FindUserId();
+            await compositionService.CreateRating(stars, id, userId);
+       
+        }
 
+        [HttpPost]
+        public void DeleteRating( int id)
+        {
+            var userId = FindUserId();
+            compositionService.RemoveRating(  userId, id);
+
+        }
+        public string FindUserId()
+        {
+            var userId = userManager.GetUserId(HttpContext.User);
+            return userId;
+        }
     }
 }

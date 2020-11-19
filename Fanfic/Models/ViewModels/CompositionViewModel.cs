@@ -12,6 +12,10 @@ namespace Fanfic.Models.ViewModels
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [DisplayName("Your rating")]
+        public float CurrentUserRating { get; set; }
+        [DisplayName("Average rating")]
+        public float Rating  { get; set; }
         [DisplayName("Author")]
         public string AuthorName { get; set; }
       

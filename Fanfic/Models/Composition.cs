@@ -30,12 +30,14 @@ namespace Fanfic.Models
 
         public IEnumerable<Chapter> Chapters { get; set; }
         public IEnumerable<TagComposition> Tags { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
 
 
         public Composition()
         {
             Chapters = new HashSet<Chapter>();
             Tags = new HashSet<TagComposition>();
+            Ratings = new List<Rating>();
         }
 
     }

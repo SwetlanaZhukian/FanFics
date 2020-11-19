@@ -83,6 +83,24 @@ namespace Fanfic.Migrations
                     b.ToTable("Compositions");
                 });
 
+            modelBuilder.Entity("Fanfic.Models.Rating", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CompositionId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("RatingValue")
+                        .HasColumnType("real");
+
+                    b.HasKey("UserId", "CompositionId");
+
+                    b.HasIndex("CompositionId");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("Fanfic.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -329,6 +347,21 @@ namespace Fanfic.Migrations
                     b.HasOne("Fanfic.Models.User", "User")
                         .WithMany("Compositions")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Fanfic.Models.Rating", b =>
+                {
+                    b.HasOne("Fanfic.Models.Composition", "Composition")
+                        .WithMany("Ratings")
+                        .HasForeignKey("CompositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Fanfic.Models.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Fanfic.Models.TagComposition", b =>
