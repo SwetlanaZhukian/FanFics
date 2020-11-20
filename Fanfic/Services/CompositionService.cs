@@ -278,6 +278,21 @@ namespace Fanfic.Services
             context.SaveChanges();
         }
 
+        public List<CompositionViewModel> GetAllNotEmptyCompositions( string userId)
+        {
+            var compositions = context.Compositions.Include(p => p.User)
+                .Include(x => x.Tags)
+                .Include(k => k.Chapters)
+                .Include(r => r.Ratings).Where(p => p.Chapters.Count() > 0).ToList();
+            List<CompositionViewModel> compositionViewModels = new List<CompositionViewModel>();
+            foreach (var composition in compositions)
+            {
+                var model = GetCompositionViewModel(composition, userId);
+                compositionViewModels.Add(model);
+            }
+            return compositionViewModels;
+        }
+
     }
 
 }

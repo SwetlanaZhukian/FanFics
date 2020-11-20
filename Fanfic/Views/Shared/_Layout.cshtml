@@ -6,9 +6,10 @@
     <title>@ViewData["Title"] - Fanfic</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
+    <link href="~/lib/jqcloud/jqcloud.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/lib/bootstrap-star-rating/themes/krajee-fa/theme.css" rel="stylesheet" />
-   
+
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/jqueryui/jquery-ui.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-tokenfield/css/bootstrap-tokenfield.css" rel="stylesheet" />
@@ -22,12 +23,13 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Fanfic</a>
                 @if (User.IsInRole("Admin"))
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Administrator" asp-action="Index">Admin</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Administrator" asp-action="Index">Admin</a>
                 }
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
+                <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
                 }
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="GetAllCompositions">All compositions</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,27 +37,27 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <form method="post" asp-controller="Account" asp-action="Logout">
-                            <ul class="nav navbar-nav navbar-right ">
-                                <li class="p-2 bd-highlight">
-                                    <i>Hello, @User.Identity.Name</i>
-                                </li>
-                                <li>
-                                    <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Sign out</button>
-                                </li>
-                            </ul>
-                        </form>
+                    <form method="post" asp-controller="Account" asp-action="Logout">
+                        <ul class="nav navbar-nav navbar-right ">
+                            <li class="p-2 bd-highlight">
+                                <i>Hello, @User.Identity.Name</i>
+                            </li>
+                            <li>
+                                <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Sign out</button>
+                            </li>
+                        </ul>
+                    </form>
                     }
                     else
                     {
-                        <ul class="navbar-nav ">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Sign In</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav ">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
+                        </li>
+                    </ul>
                     }
                 </div>
             </div>
@@ -69,7 +71,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
     <script src="~/lib/bootstrap-star-rating/themes/krajee-fa/theme.js"></script>
-   
+    <script src="~/lib/jqcloud/jqcloud-1.0.3.js"></script>
+  
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jqueryui/jquery-ui.js"></script>

@@ -21,15 +21,12 @@ namespace Fanfic.Controllers
         private readonly CompositionService compositionService;
         private readonly UserManager<User> userManager;
 
-        ApplicationContext context;
-        private readonly IOptions<BlobConfig> options;
 
-        public CompositionController(CompositionService service, UserManager<User> _userManager, ApplicationContext context, IOptions<BlobConfig> options)
+        public CompositionController(CompositionService service, UserManager<User> _userManager)
         {
             compositionService = service;
             userManager = _userManager;
-            this.context = context;
-            this.options = options;
+           
         }
 
 

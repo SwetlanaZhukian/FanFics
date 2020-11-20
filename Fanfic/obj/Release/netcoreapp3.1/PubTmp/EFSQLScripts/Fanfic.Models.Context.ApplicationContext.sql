@@ -357,3 +357,104 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201118162042_Rating')
+BEGIN
+    CREATE TABLE [Rating] (
+        [UserId] nvarchar(450) NOT NULL,
+        [CompositionId] int NOT NULL,
+        [RatingValue] real NOT NULL,
+        CONSTRAINT [PK_Rating] PRIMARY KEY ([UserId], [CompositionId]),
+        CONSTRAINT [FK_Rating_Compositions_CompositionId] FOREIGN KEY ([CompositionId]) REFERENCES [Compositions] ([Id]) ON DELETE CASCADE,
+        CONSTRAINT [FK_Rating_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+    );
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201118162042_Rating')
+BEGIN
+    CREATE INDEX [IX_Rating_CompositionId] ON [Rating] ([CompositionId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201118162042_Rating')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20201118162042_Rating', N'3.1.9');
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Rating] DROP CONSTRAINT [FK_Rating_Compositions_CompositionId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Rating] DROP CONSTRAINT [FK_Rating_AspNetUsers_UserId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Rating] DROP CONSTRAINT [PK_Rating];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    EXEC sp_rename N'[Rating]', N'Ratings';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    EXEC sp_rename N'[Ratings].[IX_Rating_CompositionId]', N'IX_Ratings_CompositionId', N'INDEX';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Ratings] ADD CONSTRAINT [PK_Ratings] PRIMARY KEY ([UserId], [CompositionId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Ratings] ADD CONSTRAINT [FK_Ratings_Compositions_CompositionId] FOREIGN KEY ([CompositionId]) REFERENCES [Compositions] ([Id]) ON DELETE CASCADE;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    ALTER TABLE [Ratings] ADD CONSTRAINT [FK_Ratings_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119152825_rating2')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20201119152825_rating2', N'3.1.9');
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201119171003_rating3')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20201119171003_rating3', N'3.1.9');
+END;
+
+GO
+

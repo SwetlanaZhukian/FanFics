@@ -1,8 +1,52 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
+<!DOCTYPE html>
+<html>
+<head>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</head>
+<body>
+
+    <div id="demo" style="width: 550px; height: 350px;"></div>
+
+
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                var tags = [];
+                $.get("/Composition/GetTag", function (response) {
+                    $.each(response.data, function (i, v) {
+                        tags.push({
+                            text: v,
+                            link: "/Home/GetAllCompositions?tagName=" + v
+
+                        });
+                        console.log(v);
+                    });
+
+
+
+
+                    $('#demo').jQCloud(tags,
+                        {
+                            autoResize: true,
+                            width: 500,
+                            height: 350,
+                            classPattern: null,
+                            colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                            fontSize: {
+                                from: 0.1,
+                                to: 0.02
+                            }
+                        });
+                });
+
+            });
+
+
+        </script>
+
+    }
+
+</body>
+</html>

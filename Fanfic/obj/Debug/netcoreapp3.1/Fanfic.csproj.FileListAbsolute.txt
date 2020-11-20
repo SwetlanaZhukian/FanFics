@@ -175,3 +175,4 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\serv
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\fanficsite - Web Deploy\mssql1.arm.json
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\fanficsite - Web Deploy\profile.arm.json
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csprojAssemblyReference.cache
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetAllCompositions.cshtml.g.cs

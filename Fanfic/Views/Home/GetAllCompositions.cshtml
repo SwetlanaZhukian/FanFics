@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Fanfic.Models.ViewModels.CompositionViewModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        ul.hr {
+            margin: 0;
+            padding: 4px;
+        }
+
+            ul.hr li {
+                display: inline-block;
+                margin-right: 5px;
+                border: 1px solid #000;
+                padding: 3px;
+            }
+    </style>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap-star-rating/js/star-rating.min.js"></script>
+    <script src="~/lib/bootstrap-star-rating/themes/krajee-fa/theme.js"></script>
+
+</head>
+<body>
+    <h5>
+        @ViewBag.Message
+    </h5>
+
+    @foreach (var composition in Model)
+    {
+
+        <div class="card mb-3 w-100">
+
+            <a asp-action="ReadComposition" asp-controller="Composition" asp-route-id="@(composition.Id)"> <h5 class="card-header">@composition.Name</h5></a>
+            <div class="card-body">
+
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.AuthorName)
+                    </dt>
+
+                    <dd class="col-sm-8 card-text">
+                        @Html.DisplayFor(model => composition.AuthorName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </dt>
+                    <dd class="col-sm-8 card-text">
+                        @Html.DisplayFor(model => composition.Genre)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Tags)
+                    </dt>
+                    <dd class="col-sm-8">
+                        <ul class="hr">
+                            @foreach (var tag in composition.Tags)
+                            {
+
+                                <li> @tag.Name</li>
+
+                            }
+                        </ul>
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </dt>
+                    <dd class="col-sm-8">
+                        <input name="star" value='@composition.Rating' class="theme-krajee-fa">
+                        <script>
+
+                            $("input.theme-krajee-fa").each(function (index) {
+                                $(this).attr('id', 'item-' + index);
+
+                            });
+
+                            $("input[name = 'star']").rating({
+                                clearCaption: 'No stars yet',
+                                hoverOnClear: false,
+                                theme: 'krajee-fa',
+                                step: 1,
+                                size: 'xs',
+                                displayOnly: true,
+                            });
+
+
+
+                        </script>
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.DateOfCreation)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => composition.DateOfCreation)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd class="col-sm-8 ">
+                        @Html.DisplayFor(model => composition.Description)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    }
+</body>
+</html>

@@ -74,6 +74,7 @@ namespace Fanfic.Services
             };
             return model;
         }
+
         public List<UserProfileViewModel> FilterByTag(List<UserProfileViewModel> model, int? tag)
         {
             var tagFromDatabase = context.Tags.FirstOrDefault(p => p.Id == tag);
