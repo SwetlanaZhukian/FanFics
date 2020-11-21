@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -251,5 +252,7 @@ namespace Fanfic.Controllers
             var userId = userManager.GetUserId(HttpContext.User);
             return userId;
         }
+
+        
     }
 }

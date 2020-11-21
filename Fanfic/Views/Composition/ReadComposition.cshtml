@@ -13,8 +13,8 @@
             ul.hr li {
                 display: inline-block;
                 margin-right: 5px;
-                border: 1px solid #000;
-                padding: 3px;
+                border-radius: 5px;
+                background-color: lightsteelblue
             }
     </style>
 
@@ -50,7 +50,7 @@
                                 @foreach (var tag in Model.Tags)
                                 {
 
-                                    <li> @tag.Name</li>
+                                    <li><a style="color:black; " asp-action="GetAllCompositions" asp-controller="Home" asp-route-tagName="@(tag.Name)"> @tag.Name</a></li>
 
                                 }
                             </ul>

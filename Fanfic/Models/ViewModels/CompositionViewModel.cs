@@ -25,6 +25,7 @@ namespace Fanfic.Models.ViewModels
         public Genre Genre { get; set; }
         [DisplayName("Date of creation")]
         public string DateOfCreation { get; set; }
+        public DateTime Date { get; set; }
         [Required]
         public string Description { get; set; }
         public IEnumerable<Chapter> Chapters { get; set; }

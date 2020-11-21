@@ -175,3 +175,4 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Release\netcoreapp3.1\staticwebasse
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Release\netcoreapp3.1\Fanfic.dll
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Release\netcoreapp3.1\Fanfic.pdb
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Release\netcoreapp3.1\Fanfic.genruntimeconfig.cache
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Release\netcoreapp3.1\Razor\Views\Home\GetAllCompositions.cshtml.g.cs

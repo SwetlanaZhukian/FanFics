@@ -122,6 +122,7 @@ namespace Fanfic.Services
                 Genre = composition.GenreOfComposition,
                 Description = composition.Description,
                 DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
+                Date=composition.DateOfCreation,
                 Tags = tags,
                 Chapters = composition.Chapters,
                 TagsForEdit = string.Join(",", tags.Select(x => x.Name)),   
@@ -292,7 +293,15 @@ namespace Fanfic.Services
             }
             return compositionViewModels;
         }
+        public List<CompositionViewModel> GetCompositionViewModelByTagName(List<CompositionViewModel> models, string tagName)
+        {
+            return models.Where(p => p.Tags.Select(p => p.Name).Contains(tagName)).ToList();
+        }
 
+        public List<CompositionViewModel> FiltrCompositionViewModelByRatingAndDate(List<CompositionViewModel> models)
+        {
+            return models.Where(p => p.Rating >= 4.0 | p.Date > DateTime.Now.AddDays(-2)).OrderByDescending(p => p.Rating).ToList();
+        }
     }
 
 }

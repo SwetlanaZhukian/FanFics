@@ -18,30 +18,29 @@ namespace Fanfic.Controllers
     {
         private readonly CompositionService compositionService;
         private readonly UserManager<User> userManager;
-        ApplicationContext context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, CompositionService service, UserManager<User> manager, ApplicationContext _context)
+        public HomeController(ILogger<HomeController> logger, CompositionService service, UserManager<User> manager)
         {
             _logger = logger;
             compositionService = service;
             userManager = manager;
-            context = _context;
+           
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<CompositionViewModel> compositionViewModels = GetCompositionViewModels();
+            compositionViewModels = compositionService.FiltrCompositionViewModelByRatingAndDate(compositionViewModels);
+            return View(compositionViewModels);
         }
-
+        
         public IActionResult GetAllCompositions(string tagName)
         {
-
-            var userId = userManager.GetUserId(HttpContext.User);
-            List<CompositionViewModel> compositionViewModels = compositionService.GetAllNotEmptyCompositions(userId);
+            List<CompositionViewModel> compositionViewModels = GetCompositionViewModels();
             if (!String.IsNullOrEmpty(tagName))
             {
-                compositionViewModels = compositionViewModels.Where(p => p.Tags.Select(p => p.Name).Contains(tagName)).ToList();
+                compositionViewModels = compositionService.GetCompositionViewModelByTagName(compositionViewModels,tagName);
             }
             if (compositionViewModels.Count == 0)
             {
@@ -54,6 +53,12 @@ namespace Fanfic.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public List<CompositionViewModel> GetCompositionViewModels()
+        {
+            var userId = userManager.GetUserId(HttpContext.User);
+            List<CompositionViewModel> compositionViewModels = compositionService.GetAllNotEmptyCompositions(userId);
+            return compositionViewModels;
         }
     }
 }

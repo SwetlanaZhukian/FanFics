@@ -43,6 +43,10 @@
         "dist/css/bootstrap3-glyphicons.css",
         "dist/css/bootstrap3-glyphicons.min.css"
       ]
+    },
+    {
+      "library": "jqcloud@1.0.3",
+      "destination": "wwwroot/lib/jqcloud/"
     }
   ]
 }
