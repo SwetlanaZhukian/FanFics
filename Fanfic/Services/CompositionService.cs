@@ -78,6 +78,7 @@ namespace Fanfic.Services
                 .Include(x => x.Tags)
                 .Include(k => k.Chapters)
                 .Include(r => r.Ratings)
+                .Include(c=>c.Comments)
                 .FirstOrDefault(x => x.Id == id);
             return composition;
         }
@@ -122,14 +123,15 @@ namespace Fanfic.Services
                 Genre = composition.GenreOfComposition,
                 Description = composition.Description,
                 DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
-                Date=composition.DateOfCreation,
+                Date = composition.DateOfCreation,
                 Tags = tags,
+                Comments=composition.Comments,
                 Chapters = composition.Chapters,
-                TagsForEdit = string.Join(",", tags.Select(x => x.Name)),   
+                TagsForEdit = string.Join(",", tags.Select(x => x.Name)),
 
             };
             compositionViewModel.Rating = composition.Ratings.Count > 0 ? composition.Ratings.Average(r => r.RatingValue) : 0;
-             
+
             var rating = FindRatingForCompositionFromUser(composition.Id, userId);
             if (rating != null)
             {
@@ -279,7 +281,7 @@ namespace Fanfic.Services
             context.SaveChanges();
         }
 
-        public List<CompositionViewModel> GetAllNotEmptyCompositions( string userId)
+        public List<CompositionViewModel> GetAllNotEmptyCompositions(string userId)
         {
             var compositions = context.Compositions.Include(p => p.User)
                 .Include(x => x.Tags)
@@ -301,6 +303,20 @@ namespace Fanfic.Services
         public List<CompositionViewModel> FiltrCompositionViewModelByRatingAndDate(List<CompositionViewModel> models)
         {
             return models.Where(p => p.Rating >= 4.0 | p.Date > DateTime.Now.AddDays(-2)).OrderByDescending(p => p.Rating).ToList();
+        }
+        public async Task SaveComment(int compositionId, string message, string userName)
+        {
+            var user = context.Users.FirstOrDefault(p => p.UserName == userName);
+            Comment comment = new Comment
+            {
+                Message = message,
+                CompositionId = compositionId,
+                UserId = user.Id
+
+            };
+            await context.Comments.AddAsync(comment);
+            await context.SaveChangesAsync();
+
         }
     }
 

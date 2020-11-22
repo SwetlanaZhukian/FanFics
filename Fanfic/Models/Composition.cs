@@ -31,6 +31,7 @@ namespace Fanfic.Models
         public IEnumerable<Chapter> Chapters { get; set; }
         public IEnumerable<TagComposition> Tags { get; set; }
         public ICollection<Rating> Ratings { get; set; }
+        public ICollection<Comment> Comments{ get; set; }
 
 
         public Composition()
@@ -38,6 +39,7 @@ namespace Fanfic.Models
             Chapters = new HashSet<Chapter>();
             Tags = new HashSet<TagComposition>();
             Ratings = new List<Rating>();
+            Comments = new List<Comment>();
         }
 
     }

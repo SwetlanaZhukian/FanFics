@@ -6,6 +6,7 @@ using Fanfic.Configuration;
 using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Services;
+using Fanfic.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -46,9 +47,9 @@ namespace Fanfic
             services.ConfigureApplicationCookie(opts =>
             {
                 opts.LoginPath = "/Account/Login";
-                
+
             });
-            
+
 
             services.AddControllersWithViews();
             services.Configure<EmailConfig>(Configuration.GetSection("SettingEmailAccount"));
@@ -58,7 +59,8 @@ namespace Fanfic
             services.AddTransient<UserService>();
             services.AddTransient<AdministratorService>();
             services.AddTransient<CompositionService>();
-           
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +81,7 @@ namespace Fanfic
 
             app.UseRouting();
             ApplicationContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -87,6 +89,7 @@ namespace Fanfic
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<CommentHub>("/comment");
             });
         }
     }

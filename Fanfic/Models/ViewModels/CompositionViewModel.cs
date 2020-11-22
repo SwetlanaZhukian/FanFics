@@ -28,6 +28,7 @@ namespace Fanfic.Models.ViewModels
         public DateTime Date { get; set; }
         [Required]
         public string Description { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
         public IEnumerable<Chapter> Chapters { get; set; }
     }
 }

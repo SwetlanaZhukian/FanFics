@@ -165,8 +165,6 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Com
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\CreateChapter.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\SuccessfulCreate.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\ReadChapter.cshtml.g.cs
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csproj.CoreCompileInputs.cache
-D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcApplicationPartsAssemblyInfo.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditComposition.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\EditChapter.cshtml.g.cs
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Composition\_ChapterNavigationPartial.cshtml.g.cs
@@ -176,3 +174,6 @@ D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\Serv
 D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\fanficsite - Web Deploy\profile.arm.json
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csprojAssemblyReference.cache
 D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetAllCompositions.cshtml.g.cs
+D:\Trainy\Курсовой\Fanfic\Fanfic\bin\Debug\netcoreapp3.1\System.Net.WebSockets.WebSocketProtocol.dll
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.csproj.CoreCompileInputs.cache
+D:\Trainy\Курсовой\Fanfic\Fanfic\obj\Debug\netcoreapp3.1\Fanfic.MvcApplicationPartsAssemblyInfo.cache
