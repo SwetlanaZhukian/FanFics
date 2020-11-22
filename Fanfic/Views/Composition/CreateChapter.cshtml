@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="~/lib/dropzone/min/dropzone.min.js"></script>
-    <link href="~/lib/dropzone/min/dropzone.min.css" rel="stylesheet" />
+   
+    
 </head>
 <body>
     @{
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label asp-for="File" class="control-label"></label>
                     <div>
-                        <input asp-for="File" type="file" />
+                        <input id="input-img" class="input-img" asp-for="File" type="file" />
                         <span asp-validation-for="File" class="text-danger"></span>
                     </div>
                 </div>
@@ -45,27 +45,7 @@
    
     @section Scripts {
         <script>
-            //Dropzone.autoDiscover = false;
-
-            //Dropzone.options.myDropzone = {
-            //    url: "/Composition/CreateChapter",
-            //    autoProcessQueue: false,
-            //    paramName: "file",
-            //    maxFilesize: 20,
-            //    maxFiles: 1,
-            //    acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            //    dictMaxFilesExceeded: "You can upload only one image",
-            //    init: function () {
-            //        this.on("addedfile", function () {
-            //            if (this.files[1] != null) {
-            //                this.removeFile(this.files[0]);
-            //            }
-            //        });
-
-
-            //    }
-
-            //};
+          
 
             $(document).ready(function () {
                 $('#textarea-editor').summernote({
@@ -88,7 +68,12 @@
                 });
 
             });
-
+            $(".input-img").fileinput({
+                theme: "fa",
+                showUpload: false,
+                maxFileCount: 1,
+                allowedFileTypes: ['image'],
+            });
         </script>
 
 

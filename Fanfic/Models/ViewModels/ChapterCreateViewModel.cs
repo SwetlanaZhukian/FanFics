@@ -13,7 +13,7 @@ namespace Fanfic.Models.ViewModels
 
         [Required]
         public string Content { get; set; }
-        [Required]
+        
         [DisplayName("Image")]
         public IFormFile File { get; set; }
        

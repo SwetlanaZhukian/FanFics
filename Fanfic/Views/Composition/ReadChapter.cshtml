@@ -7,10 +7,10 @@
     <h1 class="text-center "> @Model.Chapters.ElementAt((int)ViewData["Index"]).Name</h1>
     <div class="col text-break">
         <pre>
-        <img src="@Model.Chapters.ElementAt((int)ViewData["Index"]).Image" class=" image-chapter float-left p-3" />
-
-
-      
+@if (@Model.Chapters.ElementAt((int)ViewData["Index"]).Image != null)
+{
+        <img src="@Model.Chapters.ElementAt((int)ViewData["Index"]).Image" class=" image-chapter float-left p-3" /> 
+}
             @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Chapters.ElementAt((int)ViewData["Index"]).Content))
         
         </pre>

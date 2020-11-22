@@ -94,8 +94,10 @@ namespace Fanfic.Services
                 CompositionId = composition.Id,
                 DateOfCreation = DateTime.Now
             };
-
-            chapter.Image = SaveImage(model.File);
+            if (model.File != null)
+            {
+                chapter.Image = SaveImage(model.File);
+            }
             context.Chapters.Add(chapter);
             context.SaveChanges();
         }
