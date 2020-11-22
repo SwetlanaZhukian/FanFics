@@ -19,10 +19,12 @@ namespace Fanfic.Services
     {
         private readonly ApplicationContext context;
         private readonly IOptions<BlobConfig> options;
-        public CompositionService(ApplicationContext context, IOptions<BlobConfig> blobOptions)
+        private readonly UserManager<User> userManager;
+        public CompositionService(ApplicationContext context, IOptions<BlobConfig> blobOptions, UserManager<User> manager)
         {
             this.context = context;
             options = blobOptions;
+            userManager = manager;
         }
         public Composition CreateComposition(CompositionCreateViewModel viewModel, IdentityUser user)
         {
@@ -78,7 +80,7 @@ namespace Fanfic.Services
                 .Include(x => x.Tags)
                 .Include(k => k.Chapters)
                 .Include(r => r.Ratings)
-                .Include(c=>c.Comments)
+                .Include(c => c.Comments)
                 .FirstOrDefault(x => x.Id == id);
             return composition;
         }
@@ -125,7 +127,7 @@ namespace Fanfic.Services
                 DateOfCreation = composition.DateOfCreation.ToString("dd.MM.yyyy "),
                 Date = composition.DateOfCreation,
                 Tags = tags,
-                Comments=composition.Comments,
+                Comments = composition.Comments,
                 Chapters = composition.Chapters,
                 TagsForEdit = string.Join(",", tags.Select(x => x.Name)),
 
@@ -306,17 +308,19 @@ namespace Fanfic.Services
         }
         public async Task SaveComment(int compositionId, string message, string userName)
         {
-            var user = context.Users.FirstOrDefault(p => p.UserName == userName);
-            Comment comment = new Comment
+            var user = await userManager.FindByNameAsync(userName);
+            if (user != null)
             {
-                Message = message,
-                CompositionId = compositionId,
-                UserId = user.Id
+                Comment comment = new Comment
+                {
+                    Message = message,
+                    CompositionId = compositionId,
+                   UserName=user.UserName
 
-            };
-            await context.Comments.AddAsync(comment);
-            await context.SaveChangesAsync();
-
+                };
+                await context.Comments.AddAsync(comment);
+                await context.SaveChangesAsync();
+            }
         }
     }
 

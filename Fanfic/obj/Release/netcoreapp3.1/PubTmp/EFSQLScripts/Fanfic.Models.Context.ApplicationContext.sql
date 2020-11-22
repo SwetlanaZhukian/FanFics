@@ -458,3 +458,82 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201121150005_Comments')
+BEGIN
+    CREATE TABLE [Comments] (
+        [Id] int NOT NULL IDENTITY,
+        [Message] nvarchar(max) NULL,
+        [UserId] nvarchar(450) NULL,
+        [CompositionId] int NOT NULL,
+        CONSTRAINT [PK_Comments] PRIMARY KEY ([Id]),
+        CONSTRAINT [FK_Comments_Compositions_CompositionId] FOREIGN KEY ([CompositionId]) REFERENCES [Compositions] ([Id]) ON DELETE CASCADE,
+        CONSTRAINT [FK_Comments_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+    );
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201121150005_Comments')
+BEGIN
+    CREATE INDEX [IX_Comments_CompositionId] ON [Comments] ([CompositionId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201121150005_Comments')
+BEGIN
+    CREATE INDEX [IX_Comments_UserId] ON [Comments] ([UserId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201121150005_Comments')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20201121150005_Comments', N'3.1.9');
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201122123522_Comment New')
+BEGIN
+    ALTER TABLE [Comments] DROP CONSTRAINT [FK_Comments_AspNetUsers_UserId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201122123522_Comment New')
+BEGIN
+    DROP INDEX [IX_Comments_UserId] ON [Comments];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201122123522_Comment New')
+BEGIN
+    DECLARE @var0 sysname;
+    SELECT @var0 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Comments]') AND [c].[name] = N'UserId');
+    IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Comments] DROP CONSTRAINT [' + @var0 + '];');
+    ALTER TABLE [Comments] DROP COLUMN [UserId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201122123522_Comment New')
+BEGIN
+    ALTER TABLE [Comments] ADD [UserName] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20201122123522_Comment New')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20201122123522_Comment New', N'3.1.9');
+END;
+
+GO
+

@@ -33,22 +33,34 @@ namespace Fanfic.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var user = await administratorService.FindUserAsync(id);
+            var user =  administratorService.FindUser(id);
+           
             if (user == null)
             {
                 return RedirectToAction("Error");
             }
             else
             {
-                var result = await administratorService.DeleteAsync(user);
-                if (result.Succeeded)
+                if (user.Compositions.Count > 0)
                 {
-                    return RedirectToAction("Index");
+                    ViewBag.ErrorMessage = "You cannot delete this user!";
+                    return View("NotFound");
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+
+                    if (!AdministratorService.DeletedUsers.ContainsKey(user.UserName))
+                    {
+                        AdministratorService.DeletedUsers.Add(user.UserName, user.Id);
+                    }
+                    var result = await administratorService.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+            
                 return View("Index");
             }
 
@@ -56,6 +68,7 @@ namespace Fanfic.Controllers
         [HttpPost]
         public async Task<IActionResult> Blocked(string id)
         {
+            
             var user = await administratorService.FindUserAsync(id);
             if (user == null)
             {
@@ -63,6 +76,10 @@ namespace Fanfic.Controllers
             }
             else
             {
+                if (!AdministratorService.DeletedUsers.ContainsKey(user.UserName))
+                {
+                    AdministratorService.DeletedUsers.Add(user.UserName, user.Id);
+                }
                 administratorService.Block(user);
                 
             }
@@ -78,6 +95,7 @@ namespace Fanfic.Controllers
             }
             else
             {
+                AdministratorService.DeletedUsers.Remove(user.UserName);
                 administratorService.UnBlock(user);
             }
             return RedirectToAction("Index");

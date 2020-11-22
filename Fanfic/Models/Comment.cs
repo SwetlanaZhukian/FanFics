@@ -11,9 +11,7 @@ namespace Fanfic.Models
         public int Id { get; set; }
         public string Message { get; set; }
 
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public string UserName{ get; set; }
         public int CompositionId { get; set; }
 
         [ForeignKey("CompositionId")]

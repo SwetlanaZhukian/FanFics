@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Fanfic.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Fanfic.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fanfic.Services
 {
@@ -13,6 +14,7 @@ namespace Fanfic.Services
     {
         private readonly ApplicationContext context;
         private readonly UserManager<User> userManager;
+        public static Dictionary<string, string> DeletedUsers= new Dictionary<string, string>();
         public AdministratorService(ApplicationContext applicationContext, UserManager<User> user)
         {
             context = applicationContext;
@@ -51,8 +53,14 @@ namespace Fanfic.Services
             var user = await userManager.FindByIdAsync(id);
             return user;
         }
+        public User FindUser(string id)
+        {
+            var user = context.Users.Include(c=>c.Compositions).FirstOrDefault(p => p.Id == id);
+            return user;
+        }
         public async Task<IdentityResult> DeleteAsync(User user)
         {
+           
             return await userManager.DeleteAsync(user);
         }
         public void Block(User user)

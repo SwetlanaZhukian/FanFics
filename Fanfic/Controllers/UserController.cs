@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fanfic.Filters;
 using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
 using Fanfic.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +22,16 @@ namespace Fanfic.Controllers
             userManager = manager;
             userService = service;
         }
+        [Authorize]
+        [DeletedUserFilter]
         public async Task<IActionResult> Index(int? tag, Genre genre, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
 
             IdentityUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            if (user == null)
+            {
+                return RedirectToAction("Login","Account");
+            }
             var model = userService.GetUserCompositions((User)user);
             if (tag != null && tag != 0)
             {

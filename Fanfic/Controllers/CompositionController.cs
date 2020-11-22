@@ -1,4 +1,5 @@
 ﻿using Fanfic.Configuration;
+using Fanfic.Filters;
 using Fanfic.Models;
 using Fanfic.Models.Context;
 using Fanfic.Models.ViewModels;
@@ -21,21 +22,26 @@ namespace Fanfic.Controllers
     {
         private readonly CompositionService compositionService;
         private readonly UserManager<User> userManager;
+        SignInManager<User> signInManager;
 
 
-        public CompositionController(CompositionService service, UserManager<User> _userManager)
+
+        public CompositionController(CompositionService service, UserManager<User> _userManager, SignInManager<User> signInManager)
         {
             compositionService = service;
             userManager = _userManager;
+            this.signInManager = signInManager;
            
         }
-
-
+        [Authorize]
+        [DeletedUserFilter]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public async Task<IActionResult> Create(CompositionCreateViewModel viewModel)
         {
@@ -59,7 +65,8 @@ namespace Fanfic.Controllers
 
             return View(composition);
         }
-
+        [Authorize]
+        [DeletedUserFilter]
         [HttpGet]
         public IActionResult CreateChapter(int id)
         {
@@ -67,6 +74,8 @@ namespace Fanfic.Controllers
             return View(chapterCreateViewModel);
         }
 
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public IActionResult CreateChapter(ChapterCreateViewModel chapterCreateViewModel)
         {
@@ -87,6 +96,8 @@ namespace Fanfic.Controllers
 
             return View(chapterCreateViewModel);
         }
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public IActionResult DeleteComposition(int id)
         {
@@ -153,20 +164,9 @@ namespace Fanfic.Controllers
             return View(model);
         }
 
-        //public ActionResult ReadChapter(int id)
-        //{
-        //    var chapter = compositionService.GetChapter(id);
-        //    if (chapter == null)
-        //    {
-        //        ViewBag.ErrorMessage = "Chapter cannot be found";
-        //        return View("NotFound");
 
-        //    }
-
-        //    return View(chapter);
-        //}
-
-
+        [Authorize]
+        [DeletedUserFilter]
         public IActionResult EditComposition(int id)
         {
             var userId = FindUserId();
@@ -179,6 +179,8 @@ namespace Fanfic.Controllers
             return View(compositionViewModel);
 
         }
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public IActionResult EditComposition(CompositionViewModel compositionView)
         {
@@ -190,6 +192,8 @@ namespace Fanfic.Controllers
             return View(compositionView);
         }
 
+        [Authorize]
+        [DeletedUserFilter]
         public IActionResult EditChapter(int chapterId, int compositionId)
         {
             var chapter = compositionService.GetChapter(chapterId);
@@ -202,6 +206,8 @@ namespace Fanfic.Controllers
             editChapterViewModel.CompositionId = compositionId;
             return View(editChapterViewModel);
         }
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public IActionResult EditChapter(EditChapterViewModel editChapterViewModel)
         {
@@ -212,7 +218,8 @@ namespace Fanfic.Controllers
             }
             return View(editChapterViewModel);
         }
-
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public IActionResult DeleteChapter(int chapterId, int compositionId)
         {
@@ -231,7 +238,8 @@ namespace Fanfic.Controllers
             ViewBag.ErrorMessage = "Composition cannot be found";
             return View("NotFound");
         }
-      
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public async Task Rate(float stars, int id)
         {
@@ -239,7 +247,8 @@ namespace Fanfic.Controllers
             await compositionService.CreateRating(stars, id, userId);
        
         }
-
+        [Authorize]
+        [DeletedUserFilter]
         [HttpPost]
         public void DeleteRating( int id)
         {

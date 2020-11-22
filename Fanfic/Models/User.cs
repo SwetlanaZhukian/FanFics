@@ -12,12 +12,11 @@ namespace Fanfic.Models
         public bool Block { get; set; }
         public List<Composition> Compositions { get; set; }
         public ICollection<Rating> Ratings { get; set; }
-        public ICollection<Comment> Comments { get; set; }
         public User()
         {
             Compositions = new List<Composition>();
             Ratings = new List<Rating>();
-            Comments = new List<Comment>();
+           
         }
     }
 }

@@ -66,7 +66,7 @@
                         @Html.DisplayNameFor(model => model.Rating)
                     </dt>
                     <dd class="col-sm-8">
-                        <input name="star" value='@composition.Rating' class="theme-krajee-fa">
+                        <input name="star" value='@composition.Rating.ToString(System.Globalization.CultureInfo.InvariantCulture)' class="theme-krajee-fa">
                         <script>
 
                             $("input.theme-krajee-fa").each(function (index) {
@@ -78,7 +78,7 @@
                                 clearCaption: 'No stars yet',
                                 hoverOnClear: false,
                                 theme: 'krajee-fa',
-                                step: 1,
+                                step: 0.5,
                                 size: 'xs',
                                 displayOnly: true,
                             });
